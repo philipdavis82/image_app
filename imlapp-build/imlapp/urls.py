@@ -17,10 +17,13 @@ from django.contrib import admin
 from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
+from images import views
 
 urlpatterns = [
     path('images/', include('images.urls')),
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls), 
+    path('', views.Index.as_view(), name='index'),
+    path('login/', views.Login.as_view(), name='login'),
 ]
 
 if settings.DEBUG:
