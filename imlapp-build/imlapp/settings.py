@@ -26,7 +26,7 @@ SECRET_KEY =  get_random_secret_key()# TODO: Make a new secret key and store it 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition

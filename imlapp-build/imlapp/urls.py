@@ -17,13 +17,16 @@ from django.contrib import admin
 from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
-from images import views
+import images  
 
 urlpatterns = [
     path('images/', include('images.urls')),
     path('admin/', admin.site.urls), 
-    path('', views.Index.as_view(), name='index'),
-    path('login/', views.Login.as_view(), name='login'),
+    path('', images.views.Index.as_view(), name='index'),
+    path('login/', images.views.Login.as_view(), name='login'),
+    path('images/image_select/', images.views.ImageSelect.as_view(), name='image select'),
+    path('image_upload/', images.views.ImageSelect.as_view(), name='image select'),
+    path('images/image_select/upload_handler.py', images.views.upload_image, name='upload_image'),
 ]
 
 if settings.DEBUG:
