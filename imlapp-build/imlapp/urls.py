@@ -25,6 +25,7 @@ urlpatterns = [
     path('', images.views.Index.as_view(), name='index'),
     path('login/', images.views.Login.as_view(), name='login'),
     path('images/image_select/', images.views.ImageSelect.as_view(), name='image select'),
+    path('images/image_select/images/image_select/', images.views.redirect_view, name='image select'),
     path('image_upload/', images.views.ImageSelect.as_view(), name='image select'),
     path('images/image_select/upload_handler.py', images.views.upload_image, name='upload_image'),
 ]
