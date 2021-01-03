@@ -20,18 +20,11 @@ class Index(LoginRequiredMixin, View):
 
 from django.shortcuts import redirect
 
-def redirect_view(request):
-    print("hello")
-    print(request.get_full_path())
-    response = redirect('ImageSelect')
-    return response
-
 class ImageSelect(LoginRequiredMixin, View):
     template = 'image_select.html'
     login_url = '/login/'
 
     def get(self, request):
-        print("Hello")
         return render(request, self.template)
 
 
