@@ -25,18 +25,33 @@ class ImageSelect(LoginRequiredMixin, View):
     login_url = '/login/'
 
     def get(self, request):
-        return render(request, self.template)
+        pagedata = {}
+        # Here, Load the current file if there is one. If not load the image upload graphic
+        # file = default_storage.open(file_name_op)
+        # file_url = default_storage.url(file_name_op)
+        return render(request, self.template, pagedata)
 
 
 def upload_image(request):
+    """
+    Save two versions of the image as jpgs.
+    - One version will be the original that will be operated on each time the view is updated.
+    - The second is the current result of the operation.
+
+    TODO:
+        - Convert the image to jpg
+    """
     #  Saving POST'ed file to storage
     file = request.FILES['img']
     os.mkdir(request.user.username)
-    file_name = default_storage.save(request.user.username+"/"+file.name, file)
+    file_name = default_storage.save(request.user.username+"/"+"original."+file.name.split(".")[-1], file)
+    file_name_op = default_storage.save(request.user.username+"/"+"current."+file.name.split(".")[-1], file)
     #  Reading file from storage
-    file = default_storage.open(file_name)
-    file_url = default_storage.url(file_name)
-
+    # file = default_storage.open(file_name)
+    # file_url = default_storage.url(file_name)
+    # file = default_storage.open(file_name_op)
+    # file_url = default_storage.url(file_name_op)
+    return redirect(request,"images/image_select/")
 
 class Login(View):
     template = 'login.html'

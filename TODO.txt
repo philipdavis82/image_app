@@ -1,2 +1,45 @@
 TODO:
-    - ...
+    - Convert the loaded images to jpgs before saving
+    - The working directory should look like this
+        - info.config
+            - Stores the Meta data
+        - original.jpg
+            - The original image
+        - current.jpg
+            - The current result after operating on original image
+    
+    Server workflow example:
+    
+    *   website inputs -> info.config 
+    *                          v
+    *   original.jpg -> | Computations | -> current.jpg 
+    
+
+    - Store the original image + settings into database for going back to other projects?
+        - Storing the original + Meta data Reduces the amount of data used on the server
+        - This is similar to how lightroom works. 
+        - Cap the amount of images in the database. Maybe only 100 for now?
+    - If there is an image then display it instead of the upload image graphic
+        - Add an animation for dragging and dropping an image
+    - Add in a horizontal scroll for style images.
+        - https://blog.hubspot.com/website/horizontal-scrolling
+        - https://supsystic.com/example/gallery-horizontal-scroll/
+    - Add in Resolution downscale slider
+    - Add in Resolution upscale slider
+    - Add in algorithmic pre/post processing
+        - Noise reduction
+        - Gaussian Blur
+    - Allow for processing to be dragged and droped to determine order?
+        - Ie. if I want a gaussian blur before style transfer I would drop the 
+            blur slider before the style selecter
+        - generate a function pointer mapping and function order list to do this.
+            - Functions in function mapp must input and output the same kwargs. 
+                and the function will handle parsing the kwargs correctly.
+    - Add upper limit on the resolution of the pre-transfer image
+    - Add upper limit on the resolution of the post-upscaled image
+    - Find a way to deal with users that are not super users
+    - Replace the task menues things at the home page with image links to the 
+        different tools on the site. 
+    - Capture processing data information to determine bottlenecks
+    - DARK MODE! eventually
+    
