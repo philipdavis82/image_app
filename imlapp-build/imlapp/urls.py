@@ -26,9 +26,8 @@ urlpatterns = [
     path('login/', images.views.Login.as_view(), name='login'),
     path('images/image_select/', images.views.ImageSelect.as_view(), name='image select'),
     path('image_upload/', images.views.ImageSelect.as_view(), name='image select'),
-    path('images/image_select/upload_handler.py', images.views.upload_image, name='upload_image'),
-]
+    path('images/image_select/upload_handler', images.views.upload_image, name='upload_image'),
+] 
 
-if settings.DEBUG:
-        urlpatterns += static(settings.MEDIA_URL,
+urlpatterns += static(settings.MEDIA_URL,
                               document_root=settings.MEDIA_ROOT)

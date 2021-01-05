@@ -21,10 +21,19 @@
         <div id="content-wrapper">
 
             <div class="container-fluid">
-
-                <div id="dropzone_element" class="dropzone">
-                    Drop files here to upload
-                </div>
+                {% load data_url %}
+                {% if image_found != 1 %}
+                    <form id="dropzone_element" class="dropzone">
+                        {% csrf_token %}
+                        Drop files here to upload
+                    </form>
+                    <script src="/static/js/dropzone.js"></script>
+                {% else %}
+                    <div>
+                        <img src="{% data_url img %}" />
+                        I Found An Image
+                    </div>
+                {% endif %}
 
                 <!-- Sticky Footer -->
                 {% include "footer.html" %}

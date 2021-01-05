@@ -5,10 +5,17 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.files.storage import default_storage
+from django.urls import reverse
 import os
 from .forms import *
+from imlapp import settings
+from PIL import Image
 # Create your views here.
 
+# END
+
+
+# default_storage.DEFAULT_FILE_STORAGE = 'storages.backends.overwrite.OverwriteStorage'
 
 class Index(LoginRequiredMixin, View):
     template = 'index.html'
@@ -20,12 +27,28 @@ class Index(LoginRequiredMixin, View):
 
 from django.shortcuts import redirect
 
+IMAGES_DIR = os.path.join("images","static","images")
+
 class ImageSelect(LoginRequiredMixin, View):
     template = 'image_select.html'
     login_url = '/login/'
 
     def get(self, request):
-        pagedata = {}
+        
+        pagedata = {
+            "image_found" : 0
+        }
+        try:
+            directory = os.path.join(settings.BASE_DIR,IMAGES_DIR,request.user.username)
+            file_name = os.path.join(directory,"original."+"jpg")
+            file = default_storage.open(file_name)
+            print(type(file.file))
+            pagedata["image_found"] = 1
+            
+            pagedata["img"] = file_name 
+        except Exception as e:
+            print(e)
+            pass
         # Here, Load the current file if there is one. If not load the image upload graphic
         # file = default_storage.open(file_name_op)
         # file_url = default_storage.url(file_name_op)
@@ -43,16 +66,32 @@ def upload_image(request):
     """
     #  Saving POST'ed file to storage
     file = request.FILES['img']
-    os.mkdir(request.user.username)
-    file_name = default_storage.save(request.user.username+"/"+"original."+file.name.split(".")[-1], file)
-    file_name_op = default_storage.save(request.user.username+"/"+"current."+file.name.split(".")[-1], file)
+    directory = os.path.join(settings.BASE_DIR,IMAGES_DIR,request.user.username)
+    try:
+        os.mkdir(directory)
+    except:
+        print("Directory Exists")
+    og_file_name = os.path.join(directory,"original."+file.name.split(".")[-1])
+    cr_file_name = os.path.join(directory,"current."+file.name.split(".")[-1])
+    try:
+        os.remove(og_file_name)
+    except:
+        pass
+    try: 
+        os.remove(cr_file_name)
+    except: 
+        pass
+    print(file.name)
+    file_name = default_storage.save(og_file_name, file)
+    file_name_op = default_storage.save(cr_file_name, file)
+    print(file_name)
     #  Reading file from storage
     # file = default_storage.open(file_name)
     # file_url = default_storage.url(file_name)
     # file = default_storage.open(file_name_op)
     # file_url = default_storage.url(file_name_op)
-    return redirect(request,"images/image_select/")
-
+    return redirect("/images/image_select/")
+    
 class Login(View):
     template = 'login.html'
 

@@ -23,6 +23,7 @@ function createDropzoneMethods() {
     }
 
     dropzone.ondrop = function (e) {
+        console.log("Dropping")
         // Stop browser from simply opening that was just dropped
         e.preventDefault();
         // Restore original dropzone appearance
@@ -57,7 +58,7 @@ function upload_files(files) {
     }
     $.ajax({
         headers: { 'X-CSRFToken': csrftoken },
-        url: "upload_handler.py",
+        url: "upload_handler",
         processData: false,
         contentType: false,
         type: 'POST',

@@ -2,3 +2,4 @@
 */media/images/*
 *.sqlite3
 *.pyc
+*/static/images/*
