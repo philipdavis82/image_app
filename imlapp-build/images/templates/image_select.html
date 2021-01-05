@@ -22,6 +22,7 @@
 
             <div class="container-fluid">
                 {% load data_url %}
+                {% load static %}
                 {% if image_found != 1 %}
                     <form id="dropzone_element" class="dropzone">
                         {% csrf_token %}
@@ -30,7 +31,7 @@
                     <script src="/static/js/dropzone.js"></script>
                 {% else %}
                     <div>
-                        <img src="{% data_url img %}" />
+                        <img src="{% static img %}" />
                         I Found An Image
                     </div>
                 {% endif %}

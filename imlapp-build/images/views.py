@@ -44,8 +44,11 @@ class ImageSelect(LoginRequiredMixin, View):
             file = default_storage.open(file_name)
             print(type(file.file))
             pagedata["image_found"] = 1
-            
-            pagedata["img"] = file_name 
+            im = Image.open(file_name)
+            im.thumbnail((256,256))
+            thmb = os.path.join(directory,"display."+"jpg")
+            im.save(thmb,"JPEG")
+            pagedata["img"] = thmb 
         except Exception as e:
             print(e)
             pass
