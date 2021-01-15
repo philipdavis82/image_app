@@ -42,7 +42,6 @@ class ImageSelect(LoginRequiredMixin, View):
             directory = os.path.join(settings.BASE_DIR,IMAGES_DIR,request.user.username)
             file_name = os.path.join(directory,"original."+"jpg")
             file = default_storage.open(file_name)
-            print(type(file.file))
             pagedata["image_found"] = 1
             im = Image.open(file_name)
             im.thumbnail((256,256))
@@ -55,6 +54,7 @@ class ImageSelect(LoginRequiredMixin, View):
         # Here, Load the current file if there is one. If not load the image upload graphic
         # file = default_storage.open(file_name_op)
         # file_url = default_storage.url(file_name_op)
+        # print(self.template)
         return render(request, self.template, pagedata)
 
 
